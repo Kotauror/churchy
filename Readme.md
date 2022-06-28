@@ -16,5 +16,5 @@ Interacting with API
 * View single estate `http://localhost:8000/api/estates/id` 
 
 DB interactions 
-* connect to the DB: `cd backend`, `sqlite3  db.sqlite3` 
-* list tables `.tables`, you should see the base one - `churchy_` 
+* connect to the DB: `cd backend`, `\psql -d churchy` 
+* username and password in .env
