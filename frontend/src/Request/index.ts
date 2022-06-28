@@ -20,7 +20,7 @@ export const doRequest = async ({
   body,
   url
 }: IRequestOptions): Promise<any> => {
-  const rootPath = process.env.REACT_APP_API_URL
+  const rootPath = process.env.REACT_APP_CHURCHY_API_URL
 
   const requestData = {
     method: method,
@@ -28,14 +28,8 @@ export const doRequest = async ({
     data: body
   };
 
-  const headers = {
-    Pragma: "no-cache"
-  };
-
-
   const request = await axios({
     ...requestData,
-    headers,
   });
   return request.data;
 };
