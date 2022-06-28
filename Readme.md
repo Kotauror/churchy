@@ -12,8 +12,8 @@
 Interacting with API
 
 * Go to admin dashboard `http://localhost:8000/admin` 
-* View all estates `http://localhost:8000/api/estates/`
-* View single estate `http://localhost:8000/api/estates/id` 
+* View all places of prayer `http://localhost:8000/api/churchy/`
+* View single place `http://localhost:8000/api/churchy/1/` 
 
 DB interactions 
 * connect to the DB: `cd backend`, `\psql -d churchy` 
