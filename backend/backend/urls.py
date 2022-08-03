@@ -19,7 +19,11 @@ from rest_framework import routers
 from churchy import views
 
 router = routers.DefaultRouter()
-router.register(r'churchy', views.PlaceOfPrayerView, 'placeOfPrayer')
+router.register(r'plot', views.PlotView, 'plot')
+router.register(r'building', views.BuildingView, 'building')
+router.register(r'green', views.GreenView, 'green')
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),

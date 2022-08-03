@@ -1,10 +1,16 @@
 from django.contrib import admin
 
-from .models import PlaceOfPrayer
+from .models import Plot, Building, Green
 
-class PlaceOfPrayerAdmin(admin.ModelAdmin):
+class PlotAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
 
-# Register your models here.
+class BuildingAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description')
 
-admin.site.register(PlaceOfPrayer, PlaceOfPrayerAdmin)
+class GreenAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description')
+
+admin.site.register(Building, BuildingAdmin)
+admin.site.register(Plot, PlotAdmin)
+admin.site.register(Green, GreenAdmin)
