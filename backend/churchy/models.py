@@ -42,9 +42,14 @@ class Building(models.Model):
   visitors_access_details = models.TextField()
   praying_access = models.BooleanField()
   coordinates = ArrayField(models.CharField(max_length = 500))
+  plot = models.ForeignKey(
+    Plot, 
+    on_delete=models.DO_NOTHING,
+    null=True
+  )
 
   def _str_(self):
-      return self.name
+    return self.name
 
 class Green(models.Model):
   class GreenType(models.TextChoices):
@@ -62,3 +67,8 @@ class Green(models.Model):
   visitors_access = models.CharField(max_length = 2, choices=Accesibility.choices)
   visitors_access_details = models.TextField()
   coordinates = ArrayField(ArrayField(models.CharField(max_length = 500)))
+  plot = models.ForeignKey(
+    Plot, 
+    on_delete=models.DO_NOTHING,
+    null=True
+  )

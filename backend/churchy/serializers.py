@@ -9,9 +9,9 @@ class PlotSerializer(serializers.ModelSerializer):
 class BuildingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Building
-        fields = ('id', 'name', 'purpose', 'address', 'description', 'owner', 'religion', 'visitors_access', 'visitors_access_details', 'praying_access', 'coordinates')
+        fields = ('id', 'name', 'purpose', 'address', 'description', 'owner', 'religion', 'visitors_access', 'visitors_access_details', 'praying_access', 'coordinates', 'plot')
 
 class GreenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Green
-        fields = ('id', 'name', 'green_type', 'address', 'description', 'owner', 'religion', 'visitors_access', 'visitors_access_details', 'coordinates')
+        fields = ('id', 'name', 'green_type', 'address', 'description', 'owner', 'religion', 'visitors_access', 'visitors_access_details', 'coordinates', 'plot')
