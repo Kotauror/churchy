@@ -20,7 +20,7 @@ class Plot(models.Model):
   religion = models.CharField(max_length = 2, choices=Religion.choices)
   visitors_access = models.CharField(max_length = 2, choices=Accesibility.choices)
   visitors_access_details = models.TextField()
-  coordinates = ArrayField(ArrayField(models.CharField(max_length = 500)))
+  coordinates = ArrayField(ArrayField(models.FloatField(max_length = 500)))
 
   def _str_(self):
       return self.name
@@ -41,7 +41,7 @@ class Building(models.Model):
   visitors_access = models.CharField(max_length = 2, choices=Accesibility.choices)
   visitors_access_details = models.TextField()
   praying_access = models.BooleanField()
-  coordinates = ArrayField(models.CharField(max_length = 500))
+  coordinates = ArrayField(models.FloatField(max_length = 500))
   plot = models.ForeignKey(
     Plot, 
     on_delete=models.DO_NOTHING,
@@ -66,7 +66,7 @@ class Green(models.Model):
   religion = models.CharField(max_length = 2, choices=Religion.choices)
   visitors_access = models.CharField(max_length = 2, choices=Accesibility.choices)
   visitors_access_details = models.TextField()
-  coordinates = ArrayField(ArrayField(models.CharField(max_length = 500)))
+  coordinates = ArrayField(ArrayField(models.FloatField(max_length = 500)))
   plot = models.ForeignKey(
     Plot, 
     on_delete=models.DO_NOTHING,
