@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import { ChurchyMap } from './components/Map';
+import { MapWrapper } from './components/MapWrapper';
 
 function App() {
   return (
     <div className="App">
-      <ChurchyMap />
+      <MapWrapper />
     </div>
   );
 }
