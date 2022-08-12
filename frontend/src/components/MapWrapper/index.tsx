@@ -17,7 +17,7 @@ export interface Plot {
 
 export interface Building {
   address: string;
-  coordinates: [][];
+  coordinates: [number, number];
   description: string;
   id: number;
   name: string;
