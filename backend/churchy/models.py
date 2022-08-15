@@ -12,6 +12,18 @@ class Accesibility(models.TextChoices):
   SOME_RESTRICTIONS = 'SR', 'SomeRestrictions'
   NO_ACCESS = 'NA', 'NoAccess'
 
+class Ownership(models.TextChoices):
+  KRK_PLACED_IN_POSSESSION = 'PP', 'KrakowPlacedInPossession'
+  KRK_JOINED_OWNERSHIP = 'JO', 'KrakowJoinedOwnership'
+  KRK_PERPETUAL_USE = 'PU', 'KrakowPerpetualUse'
+  FISC = 'FI', 'Fisc'
+  COUNTY_PLACED_IN_POSSESSION = 'CP', 'CountyPlacedInPossession'
+  COUNTY_JOINED_OWNERSHIP = 'CO', 'CountyJoinedOwnership'
+  COUNTY_PERPETUAL_USE = 'CU', 'CountyPerpetualUse'
+  VOIVODESHIP = 'VO', 'Voivodeship'
+  NATURAL_PERSON = 'NP', 'NaturalPerson'
+  LEGAL_ENTITY = 'LE', 'LegalEntity'
+
 class Plot(models.Model):
   name = models.CharField(max_length=120)
   address = models.TextField()
@@ -21,6 +33,7 @@ class Plot(models.Model):
   visitors_access = models.CharField(max_length = 2, choices=Accesibility.choices)
   visitors_access_details = models.TextField()
   coordinates = ArrayField(ArrayField(models.FloatField(max_length = 500)))
+  ownership_model = models.CharField(max_length = 2, choices=Ownership.choices)
 
   def _str_(self):
       return self.name

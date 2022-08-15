@@ -4,7 +4,7 @@ from .models import Plot, Building, Green
 class PlotSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plot
-        fields = ('id', 'name', 'address', 'description', 'owner', 'religion', 'visitors_access', 'visitors_access_details', 'coordinates')
+        fields = ('id', 'name', 'address', 'description', 'owner', 'religion', 'visitors_access', 'visitors_access_details', 'coordinates', 'ownership_model')
 
 class BuildingSerializer(serializers.ModelSerializer):
     class Meta:
