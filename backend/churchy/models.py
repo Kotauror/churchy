@@ -32,7 +32,7 @@ class Plot(models.Model):
   owner = models.TextField() 
   religion = models.CharField(max_length = 2, choices=Religion.choices)
   visitors_access = models.CharField(max_length = 2, choices=Accesibility.choices)
-  visitors_access_details = models.TextField()
+  visitors_access_details = models.TextField(blank=True, null=True)
   coordinates = ArrayField(ArrayField(models.FloatField(max_length = 500)))
   ownership_model = models.CharField(max_length = 2, choices=Ownership.choices)
 
@@ -53,7 +53,7 @@ class Building(models.Model):
   owner = models.TextField() 
   religion = models.CharField(max_length = 2, choices=Religion.choices)
   visitors_access = models.CharField(max_length = 2, choices=Accesibility.choices)
-  visitors_access_details = models.TextField()
+  visitors_access_details = models.TextField(blank=True, null=True)
   praying_access = models.BooleanField()
   coordinates = ArrayField(models.FloatField(max_length = 500))
   plot = models.ForeignKey(
@@ -80,7 +80,7 @@ class Green(models.Model):
   owner = models.TextField() 
   religion = models.CharField(max_length = 2, choices=Religion.choices)
   visitors_access = models.CharField(max_length = 2, choices=Accesibility.choices)
-  visitors_access_details = models.TextField()
+  visitors_access_details = models.TextField(blank=True, null=True)
   coordinates = ArrayField(ArrayField(models.FloatField(max_length = 500)))
   plot = models.ForeignKey(
     Plot, 
