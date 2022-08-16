@@ -9,7 +9,8 @@ class Religion(models.TextChoices):
 
 class Accesibility(models.TextChoices):
   UNRESTRICTED = 'UR', 'Unrestricted'
-  SOME_RESTRICTIONS = 'SR', 'SomeRestrictions'
+  OPEN_DURING_DAYTIME = 'OD', 'OpenDuringDaytime'
+  SPECIAL_ACCESS = 'SA', 'SpecialAccess'
   NO_ACCESS = 'NA', 'NoAccess'
 
 class Ownership(models.TextChoices):
@@ -67,6 +68,7 @@ class Building(models.Model):
 class Green(models.Model):
   class GreenType(models.TextChoices):
     GARDEN = 'GD', 'Garden'
+    PARK = 'PK', 'Park'
     MEADOW = 'MD', 'Meadow'
     SQUARE = 'SQ', 'Square'
     CEMETERY  = 'CT', 'Cemetery'
