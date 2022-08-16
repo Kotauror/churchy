@@ -2,7 +2,7 @@ import * as React from "react";
 import L from "leaflet";
 import { useEffect } from "react";
 import { Plot, Green, Building } from "../MapWrapper";
-import { plotStyle, greenStyle } from "./polygon_styles"
+import { plotStyle, getGreenStyle } from "./polygon_styles"
 
 const defaultZoom = 15;
 const simplefMapStyle = L.tileLayer(
@@ -28,10 +28,10 @@ const createMap = (plots: Plot[], greens: Green[], buildings: Building[]) => {
       console.log(plot.name);
     });
     polgon.addTo(map);
-  });
+  }); 
 
   greens.map(green => {
-    var polgon = L.polygon(green.coordinates, greenStyle).addTo(map);
+    var polgon = L.polygon(green.coordinates, getGreenStyle(green)).addTo(map);
     polgon.on("click", function() {
       console.log(green.name);
     });

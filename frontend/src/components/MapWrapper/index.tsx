@@ -11,7 +11,7 @@ export interface Plot {
   name: string;
   owner: string;
   religion: "RO" | "OR" | "JU" | "OT";
-  visitors_access: "UR" | "SR" | "NA";
+  visitors_access: "UR" | "OD"| "SA" | "NA";
   visitors_access_details: string;
 }
 
@@ -24,7 +24,7 @@ export interface Building {
   owner: string;
   purpose: "PP" | "CL" | "AD" | "OT";
   religion: "RO" | "OR" | "JU" | "OT";
-  visitors_access: "UR" | "SR" | "NA";
+  visitors_access: "UR" | "OD"| "SA" | "NA";
   paying_access: boolean;
   visitors_access_details: string;
   plot: number;
@@ -38,8 +38,8 @@ export interface Green {
   name: string;
   owner: string;
   religion: "RO" | "OR" | "JU" | "OT";
-  visitors_access: "UR" | "SR" | "NA";
-  green_type: "GD" | "MD" | "SQ" | "CT";
+  visitors_access: "UR" | "OD"| "SA" | "NA";
+  green_type: "GD" | "PK" | "MD" | "SQ" | "CT";
   visitors_access_details: string;
   plot: number;
 }
