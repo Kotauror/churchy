@@ -14,6 +14,7 @@ class Accesibility(models.TextChoices):
   NO_ACCESS = 'NA', 'NoAccess'
 
 class Ownership(models.TextChoices):
+  KRK_PROPERTY = 'KP', 'KrakowProperty'
   KRK_PLACED_IN_POSSESSION = 'PP', 'KrakowPlacedInPossession'
   KRK_JOINED_OWNERSHIP = 'JO', 'KrakowJoinedOwnership'
   KRK_PERPETUAL_USE = 'PU', 'KrakowPerpetualUse'
@@ -24,6 +25,7 @@ class Ownership(models.TextChoices):
   VOIVODESHIP = 'VO', 'Voivodeship'
   NATURAL_PERSON = 'NP', 'NaturalPerson'
   LEGAL_ENTITY = 'LE', 'LegalEntity'
+  NATURAL_AND_LEDAL_PERSON = "NL", "NaturalAndLegalPerson"
 
 class Plot(models.Model):
   name = models.CharField(max_length=120)

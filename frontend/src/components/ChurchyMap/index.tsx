@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Plot, Green, Building } from "../MapWrapper";
 import { plotStyle, getGreenStyle } from "./polygon_styles"
 
-const defaultZoom = 15;
+const defaultZoom = 14;
 const simplefMapStyle = L.tileLayer(
   "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
   {
@@ -17,7 +17,7 @@ const simplefMapStyle = L.tileLayer(
 
 const createMap = (plots: Plot[], greens: Green[], buildings: Building[]) => {
   const map = L.map("map", {
-    center: [50.03, 19.94],
+    center: [50.04, 19.94],
     zoom: defaultZoom,
     layers: [simplefMapStyle]
   });
