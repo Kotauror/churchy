@@ -1,8 +1,9 @@
 import * as React from "react";
-import L from "leaflet";
+import L, { LatLngExpression } from "leaflet";
 import { useEffect } from "react";
 import { Plot, Green, Building } from "../MapWrapper";
 import { plotStyle, getGreenStyle } from "./polygon_styles"
+import { analysedArea } from "./analysed_area"
 
 const defaultZoom = 14;
 const simplefMapStyle = L.tileLayer(
@@ -17,7 +18,7 @@ const simplefMapStyle = L.tileLayer(
 
 const createMap = (plots: Plot[], greens: Green[], buildings: Building[]) => {
   const map = L.map("map", {
-    center: [50.04, 19.94],
+    center: [50.036, 19.94],
     zoom: defaultZoom,
     layers: [simplefMapStyle]
   });
@@ -46,6 +47,8 @@ const createMap = (plots: Plot[], greens: Green[], buildings: Building[]) => {
   });
 
   var buildingsLayer = L.layerGroup(buildingMarkers);
+
+  L.polyline(analysedArea as LatLngExpression[]).addTo(map)
 
   map.on("zoom", function(e) {
     if (map.getZoom() >= 16) {
