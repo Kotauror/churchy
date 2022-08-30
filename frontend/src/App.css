@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+/* .main-grid {
+  display: grid
+} */
+
+.item-details {
+  position: absolute;
+  z-index: 1001;
+  display: block;
+  top: 0;
+  left: 0;
+  background-color: white;
+}
+
+.leaflet-control-layers {
+  /* width: 420px; */
+}

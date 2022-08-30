@@ -7,23 +7,23 @@ export const plotStyle = {
 export const unrestrictedGreenStyle = {
   color: "#53B816",
   weight: 1,
-  fillOpacity: 0.2
+  fillOpacity: 0.7
 };
 
 export const daytimeOpenGreenStyle = {
-  color: "#53B816",
+  color: "yellow",
   weight: 1,
-  fillOpacity: 0.6
+  fillOpacity: 0.7
 };
 
 export const specialAccessGreenStyle = {
   color: "orange",
   weight: 1,
-  fillOpacity: 0.6
+  fillOpacity: 0.7
 };
 
 export const noAccessGreenStyle = {
   color: "red",
   weight: 1,
-  fillOpacity: 0.6
+  fillOpacity: 0.7
 };

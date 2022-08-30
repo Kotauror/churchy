@@ -1,5 +1,6 @@
 import { PropertyBase } from "../MapWrapper";
 import L from "leaflet";
+import { Feature } from "geojson";
 
 export const geoJsonsFactory = (plots: PropertyBase[]): any => {
   return plots.map(plot => {
@@ -13,6 +14,6 @@ export const geoJsonsFactory = (plots: PropertyBase[]): any => {
         type: "Polygon",
         coordinates: [L.GeoJSON.latLngsToCoords(plot.coordinates)]
       }
-    }
+    } as Feature
   });
 };
