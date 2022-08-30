@@ -139,7 +139,7 @@ export const ChurchyMap = ({
     <div>
     <div className="main-grid">
       <div id="map" style={{ height: "900px" }}></div>
-      {/* BUILD A COM PONENT OR THIS, MAYBE WITH ANTD?! */}
+      {/* TODO BUILD A COM PONENT OR THIS, MAYBE WITH ANTD?! */}
       {activeFeature !== null && <div className="item-details">{activeFeature?.properties?.name}</div>}
     </div>
     </div>
