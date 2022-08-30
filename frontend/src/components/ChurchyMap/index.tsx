@@ -2,8 +2,15 @@ import * as React from "react";
 import L, { LatLngExpression } from "leaflet";
 import { useEffect } from "react";
 import { Plot, Green, Building } from "../MapWrapper";
-import { plotStyle, getGreenStyle } from "./polygon_styles"
-import { analysedArea } from "./analysed_area"
+import { analysedArea } from "./analysed_area";
+import {
+  plotStyle,
+  specialAccessGreenStyle,
+  daytimeOpenGreenStyle,
+  unrestrictedGreenStyle,
+  noAccessGreenStyle
+} from "./polygon_styles";
+import { layerFactory } from "./layer_factory";
 
 const defaultZoom = 14;
 const simplefMapStyle = L.tileLayer(
@@ -16,27 +23,52 @@ const simplefMapStyle = L.tileLayer(
   }
 );
 
-const createMap = (plots: Plot[], greens: Green[], buildings: Building[]) => {
+const createMap = (
+  plots: Plot[],
+  fullyAccessibleGreens: Green[],
+  greensOpenDaytime: Green[],
+  greensWithSpecialAccess: Green[],
+  noAccessGreen: Green[],
+  buildings: Building[]
+) => {
   const map = L.map("map", {
     center: [50.036, 19.94],
     zoom: defaultZoom,
     layers: [simplefMapStyle]
   });
 
-  plots.map(plot => {
-    var polgon = L.polygon(plot.coordinates, plotStyle);
-    polgon.on("click", function() {
-      console.log(plot.name);
-    });
-    polgon.addTo(map);
-  }); 
+  var baseMaps = {
+    // "Plan miasta": simplefMapStyle
+  };
+  var overlayMaps = {
+    "Zielone tereny kościelne dostępne bez ograniczeń": layerFactory(
+      map,
+      fullyAccessibleGreens,
+      unrestrictedGreenStyle
+    ),
+    "Zielone tereny kościelne otwarte w godzinach otwarcia kościoła": layerFactory(
+      map,
+      greensOpenDaytime,
+      daytimeOpenGreenStyle
+    ),
+    "Zielone tereny kościelne z dodatkowo ograniczonym dostępem (np. za opłatą)": layerFactory(
+      map,
+      greensWithSpecialAccess,
+      specialAccessGreenStyle
+    ),
+    "Zielone tereny kościelne niedostępne": layerFactory(
+      map,
+      noAccessGreen,
+      noAccessGreenStyle
+    ),
+    "Działki kościelne o przeważającym charakterze niekomerycyjnym": layerFactory(
+      map,
+      plots,
+      plotStyle
+    )
+  };
 
-  greens.map(green => {
-    var polgon = L.polygon(green.coordinates, getGreenStyle(green)).addTo(map);
-    polgon.on("click", function() {
-      console.log(green.name);
-    });
-  });
+  L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
 
   var buildingMarkers = buildings.map(building => {
     var marker = L.marker(building.coordinates);
@@ -48,7 +80,7 @@ const createMap = (plots: Plot[], greens: Green[], buildings: Building[]) => {
 
   var buildingsLayer = L.layerGroup(buildingMarkers);
 
-  L.polyline(analysedArea as LatLngExpression[]).addTo(map)
+  L.polyline(analysedArea as LatLngExpression[]).addTo(map);
 
   map.on("zoom", function(e) {
     if (map.getZoom() >= 16) {
@@ -63,21 +95,34 @@ const createMap = (plots: Plot[], greens: Green[], buildings: Building[]) => {
 
 interface ChurchyMapProps {
   plots: Plot[];
-  greens: Green[];
+  fullyAccessibleGreens: Green[];
+  greensOpenDaytime: Green[];
+  greensWithSpecialAccess: Green[];
+  noAccessGreen: Green[];
   buildings: Building[];
 }
 
 export const ChurchyMap = ({
   plots,
-  greens,
+  fullyAccessibleGreens,
+  greensOpenDaytime,
+  greensWithSpecialAccess,
+  noAccessGreen,
   buildings
 }: ChurchyMapProps): JSX.Element => {
   useEffect(() => {
-    const map = createMap(plots, greens, buildings);
+    const map = createMap(
+      plots,
+      fullyAccessibleGreens,
+      greensOpenDaytime,
+      greensWithSpecialAccess,
+      noAccessGreen,
+      buildings
+    );
     return () => {
       map.remove();
     };
-  }, [plots, greens, buildings]);
+  }, [plots, fullyAccessibleGreens, buildings]);
 
   return (
     <div>

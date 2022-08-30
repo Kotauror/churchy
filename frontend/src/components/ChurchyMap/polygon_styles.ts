@@ -1,22 +1,7 @@
-import { Green } from "../MapWrapper";
-
 export const plotStyle = {
   color: "#646B64",
   weight: 1,
   fillOpacity: 0.2
-};
-
-export const getGreenStyle = (green: Green) => {
-  switch (green.visitors_access) {
-    case "UR":
-      return unrestrictedGreenStyle;
-    case "OD":
-      return daytimeOpenGreenStyle;
-    case "SA":
-      return specialAccessGreenStyle;
-    case "NA":
-      return noAccessGreenStyle;
-  }
 };
 
 export const unrestrictedGreenStyle = {

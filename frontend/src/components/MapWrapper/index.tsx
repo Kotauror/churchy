@@ -3,65 +3,83 @@ import { useState, useEffect } from "react";
 import doRequest from "../../Request";
 import { ChurchyMap } from "../ChurchyMap";
 
-export interface Plot {
-  address: string;
-  coordinates: [][];
-  description: string;
+export interface PropertyBase {
   id: number;
   name: string;
   owner: string;
+  address: string;
+  description: string;
   religion: "RO" | "OR" | "JU" | "OT";
-  visitors_access: "UR" | "OD"| "SA" | "NA";
   visitors_access_details: string;
+  coordinates: [][] | [number, number];
 }
 
-export interface Building {
-  address: string;
-  coordinates: [number, number];
-  description: string;
-  id: number;
-  name: string;
-  owner: string;
+export interface Plot extends PropertyBase {
+  visitors_access: "UR" | "OD" | "SA" | "NA";
+  coordinates: [][];
+}
+
+export interface Building extends PropertyBase {
   purpose: "PP" | "CL" | "AD" | "OT";
-  religion: "RO" | "OR" | "JU" | "OT";
-  visitors_access: "UR" | "OD"| "SA" | "NA";
+  visitors_access: "UR" | "OD" | "SA" | "NA";
   paying_access: boolean;
-  visitors_access_details: string;
   plot: number;
+  coordinates: [number, number];
 }
 
-export interface Green {
-  address: string;
-  coordinates: [][];
-  description: string;
-  id: number;
-  name: string;
-  owner: string;
-  religion: "RO" | "OR" | "JU" | "OT";
-  visitors_access: "UR" | "OD"| "SA" | "NA";
+export interface Green extends PropertyBase {
+  visitors_access: "UR" | "OD" | "SA" | "NA";
   green_type: "GD" | "PK" | "MD" | "SQ" | "CT";
-  visitors_access_details: string;
   plot: number;
+  coordinates: [][];
 }
 
 export const MapWrapper = (): JSX.Element => {
   const [plots, setPlots] = useState<Plot[]>([]);
   const [buildings, setBuildings] = useState<Building[]>([]);
-  const [greens, setGreens] = useState<Green[]>([]);
-
+  const [fullyAccessibleGreens, setFullyAccessibleGreens] = useState<Green[]>(
+    []
+  );
+  const [greensOpenDaytime, setGreensOpenDaytime] = useState<Green[]>([]);
+  const [greensWithSpecialAccess, setGreensWithSpecialAccess] = useState<
+    Green[]
+  >([]);
+  const [noAccessGreen, setNoAccessGreen] = useState<Green[]>([]);
 
   useEffect(() => {
     (async () => {
       const plotResult: Plot[] = await doRequest({ path: "/plot/" });
       setPlots(plotResult);
 
-      const buildingResult: Building[] = await doRequest({ path: "/building/" });
+      const buildingResult: Building[] = await doRequest({
+        path: "/building/"
+      });
       setBuildings(buildingResult);
 
       const greenResult: Green[] = await doRequest({ path: "/green/" });
-      setGreens(greenResult);
+      setFullyAccessibleGreens(
+        greenResult.filter(green => green.visitors_access === "UR")
+      );
+      setGreensOpenDaytime(
+        greenResult.filter(green => green.visitors_access === "OD")
+      );
+      setGreensWithSpecialAccess(
+        greenResult.filter(green => green.visitors_access === "SA")
+      );
+      setNoAccessGreen(
+        greenResult.filter(green => green.visitors_access === "NA")
+      );
     })();
   }, []);
 
-  return <ChurchyMap plots={plots} greens={greens} buildings={buildings} />;
+  const churchyMapProps = {
+    plots,
+    fullyAccessibleGreens,
+    greensOpenDaytime,
+    greensWithSpecialAccess,
+    noAccessGreen,
+    buildings
+  };
+
+  return <ChurchyMap {...churchyMapProps} />;
 };
