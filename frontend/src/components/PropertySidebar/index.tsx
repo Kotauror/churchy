@@ -29,27 +29,11 @@ export const PropertySidebar = ({
     setVisible(true);
   }, [feature]);
 
-  function useOutsideAlerter(ref: any) {
-    useEffect(() => {
-      function handleClickOutside(event: any) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setActiveFeature(undefined);
-        }
-      }
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [ref]);
-  }
-
-  const wrapperRef = React.useRef(null);
-  useOutsideAlerter(wrapperRef);
-
   if (visible) {
     return (
-      <div className="item-details" ref={wrapperRef}>
+      <div className="item-details">
         <Drawer
+        //@ts-ignore ins
           onClose={onClose}
           getContainer={false}
           style={{
