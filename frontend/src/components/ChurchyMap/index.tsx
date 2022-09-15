@@ -3,7 +3,7 @@ import L, { LatLngExpression } from "leaflet";
 import { useEffect } from "react";
 import { Plot, Green, Building } from "../MapWrapper";
 import { analysedArea } from "./analysed_area";
-import {PropertySidebar} from "../PropertySidebar";
+import { PropertySidebar } from "../PropertySidebar";
 import {
   plotStyle,
   specialAccessGreenStyle,
@@ -35,7 +35,7 @@ const createMap = (
   setActiveFeature: (feature: any) => void
 ) => {
   const map = L.map("map", {
-    center: [50.051, 19.94],
+    center: [50.051, 19.935],
     zoom: defaultZoom,
     layers: [simplefMapStyle]
   });
@@ -138,8 +138,13 @@ export const ChurchyMap = ({
 
   return (
     <div className="main-grid">
-      <div id="map" style={{ height: "900px" }}></div>
-      {activeFeature !== undefined && (<PropertySidebar feature={activeFeature} />)}
+      <div id="map" style={{ height: "800px" }}></div>
+      {activeFeature !== undefined && (
+        <PropertySidebar
+          feature={activeFeature}
+          setActiveFeature={setActiveFeature}
+        />
+      )}
     </div>
   );
 };
