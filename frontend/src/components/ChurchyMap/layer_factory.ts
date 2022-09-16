@@ -11,7 +11,7 @@ const actionListenersForLayers = (
   layer.bindTooltip(feature.properties.name);
   layer.on("click", () => {
     setActiveFeature(feature)
-    map.flyTo([feature.geometry.coordinates[0][0][1], feature.geometry.coordinates[0][0][0]], 17)
+    map.flyTo([feature.geometry.coordinates[0][0][1], feature.geometry.coordinates[0][0][0] - 0.003], 16)
   })
   layer.on("mouseover", () => {
     layer.setStyle({

@@ -3,32 +3,37 @@ import { Feature } from "geojson";
 import { Drawer } from "antd";
 import { useState, useEffect } from "react";
 
-export const CloseIcon = () => {
-  return <div className="drawer-icon">{"◄"}</div>;
+export const CloseIcon = ({ arrow, onClick }: { arrow: any; onClick: any }) => {
+  return (
+    <div className="drawer-icon">
+      <button
+        style={{
+          zIndex: 1002,
+          position: "absolute",
+          top: "calc(50% - 50px)",
+          height: "50px",
+          right: "-10px",
+          width: "20px",
+          fontSize: "x-small",
+          color: "#8d8d8d",
+          border: 0,
+          borderLeft: "1px solid rgb(218,220,224)",
+          boxShadow:
+            "0 1px 2px rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%)",
+          borderRadius: "0 8px 8px 0",
+          cursor: "pointer"
+        }}
+        onClick={() => onClick()}
+      >
+        {arrow}
+      </button>
+    </div>
+  );
 };
 
 export const OpenIcon = ({ onClick }: { onClick: any }) => {
   return (
-    <button
-      className="back-button"
-      style={{
-        zIndex: 1002,
-        position: "absolute",
-        top: "calc(50% - 50px)",
-        height: "50px",
-        left: 0,
-        width: "20px",
-        fontSize: "x-small",
-        color: "#8d8d8d",
-        border: 0,
-        borderLeft: "1px solid rgb(218,220,224)",
-        boxShadow:
-          "0 1px 2px rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%)",
-        borderRadius: "0 8px 8px 0",
-        cursor: "pointer"
-      }}
-      onClick={onClick}
-    >
+    <button className="back-button" onClick={onClick}>
       {"►"}
     </button>
   );
@@ -67,10 +72,6 @@ export const PropertySidebar = ({
 
   const onClose = () => {
     setVisible(false);
-  };
-
-  const onRemove = () => {
-    setVisible(false);
     setActiveFeature(undefined);
   };
 
@@ -80,30 +81,30 @@ export const PropertySidebar = ({
 
   return (
     <div className="item-details">
-      {visible && (
-        <div>
-          <RemoveIcon onClick={() => onRemove()} />
-          <Drawer
-            //@ts-ignore ins
-            onClose={onClose}
-            getContainer={false}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              zIndex: 1001,
-              backgroundColor: "white",
-              height: "100%",
-              opacity: 0.9
-            }}
-            open={visible}
-            closeIcon={<CloseIcon />}
-          >
-            {feature!.properties!.name}
-          </Drawer>
-        </div>
-      )}
-      {!visible && <OpenIcon onClick={() => setVisible(true)} />}
+      <div>
+        <Drawer
+          //@ts-ignore ins
+          onClose={onClose}
+          getContainer={false}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: visible ? 0 : "-23em",
+            zIndex: 1001,
+            backgroundColor: "white",
+            height: "100%",
+            opacity: 0.9,
+            transition: "all 0.5s cubic-bezier(0.4, 0, 1, 1) 0s"
+          }}
+          open={visible}
+        >
+          {feature!.properties!.name}
+          <CloseIcon
+            arrow={visible ? "<" : ">"}
+            onClick={() => setVisible(!visible)}
+          />
+        </Drawer>
+      </div>
     </div>
   );
 };

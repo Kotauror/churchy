@@ -119,9 +119,6 @@ export const ChurchyMap = ({
   buildings
 }: ChurchyMapProps): JSX.Element => {
   const [activeFeature, setActiveFeature] = React.useState<Feature>();
-  const [mapInstance, setMapInstance] = React.useState<L.Map | null>(null);
-
-  const mapRef = React.useRef(null);
 
   useEffect(() => {
     const map = createMap(
@@ -134,25 +131,10 @@ export const ChurchyMap = ({
       setActiveFeature
     );
 
-    //@ts-ignore ins
-    mapRef.current = map;
-    setMapInstance(mapRef.current);
-
     return () => {
       map.remove();
     };
   }, [plots, fullyAccessibleGreens, buildings]);
-
-  useEffect(() => {
-    if (!mapInstance) return;
-    if (mapInstance) {
-      mapInstance.on("preclick", () => {
-        if (activeFeature === undefined) {
-          mapInstance.flyTo([50.051, 19.935], defaultZoom);
-        }
-      });
-    }
-  }, [activeFeature]);
 
   return (
     <div className="main-grid">
