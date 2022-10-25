@@ -12,8 +12,8 @@ export const CloseIcon = ({ arrow, onClick }: { arrow: any; onClick: any }) => {
           position: "absolute",
           top: "calc(50% - 50px)",
           height: "50px",
-          right: "-10px",
-          width: "20px",
+          right: "-25px",
+          width: "25px",
           fontSize: "x-small",
           color: "#8d8d8d",
           border: 0,
@@ -21,7 +21,8 @@ export const CloseIcon = ({ arrow, onClick }: { arrow: any; onClick: any }) => {
           boxShadow:
             "0 1px 2px rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%)",
           borderRadius: "0 8px 8px 0",
-          cursor: "pointer"
+          cursor: "pointer",
+          padding: "inherit"
         }}
         onClick={() => onClick()}
       >
@@ -89,18 +90,25 @@ export const PropertySidebar = ({
           style={{
             position: "absolute",
             top: 0,
-            left: visible ? 0 : "-23em",
+            width: "22em",
+            left: visible ? 0 : "-22em",
             zIndex: 1001,
             backgroundColor: "white",
+            boxShadow:
+              "rgb(60 64 67 / 30%) 0px 1px 2px, rgb(60 64 67 / 15%) 0px 2px 6px 2px",
             height: "100%",
-            opacity: 0.9,
+            opacity: 0.97,
             transition: "all 0.5s cubic-bezier(0.4, 0, 1, 1) 0s"
           }}
           open={visible}
         >
           {feature!.properties!.name}
           <CloseIcon
-            arrow={visible ? "<" : ">"}
+            arrow={
+              <span className="material-icons md-light">
+                arrow_{visible ? "left" : "right"}
+              </span>
+            }
             onClick={() => setVisible(!visible)}
           />
         </Drawer>

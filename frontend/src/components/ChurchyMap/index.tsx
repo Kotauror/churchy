@@ -44,31 +44,31 @@ const createMap = (
     // "Plan miasta": simplefMapStyle
   };
   var overlayMaps = {
-    "Zielone tereny kościelne dostępne bez ograniczeń": layerFactory(
+    "Dostęp bez ograniczeń": layerFactory(
       map,
       fullyAccessibleGreens,
       unrestrictedGreenStyle,
       setActiveFeature
     ),
-    "Zielone tereny kościelne otwarte w godzinach otwarcia kościoła": layerFactory(
+    "Dostęp w godzinach otwarcia kościoła": layerFactory(
       map,
       greensOpenDaytime,
       daytimeOpenGreenStyle,
       setActiveFeature
     ),
-    "Zielone tereny kościelne z ograniczonym dostępem (np. za opłatą)": layerFactory(
+    "Dostęp dodatkowo ograniczony (np. za opłatą)": layerFactory(
       map,
       greensWithSpecialAccess,
       specialAccessGreenStyle,
       setActiveFeature
     ),
-    "Zielone tereny kościelne niedostępne": layerFactory(
+    "Brak dostępu": layerFactory(
       map,
       noAccessGreen,
       noAccessGreenStyle,
       setActiveFeature
     ),
-    "Działki kościelne o przeważającym charakterze niekomerycyjnym": layerFactory(
+    "Niekomercyjne działki kościelne": layerFactory(
       map,
       plots,
       plotStyle,
@@ -78,25 +78,31 @@ const createMap = (
 
   L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
 
-  var buildingMarkers = buildings.map(building => {
-    var marker = L.marker(building.coordinates);
-    marker.on("click", function() {
-      console.log(building.name);
-    });
-    return marker;
-  });
-
-  var buildingsLayer = L.layerGroup(buildingMarkers);
+  // pushes back the plots so that the inner plots are shown on hover
+  overlayMaps['Niekomercyjne działki kościelne'].bringToBack()
 
   L.polyline(analysedArea as LatLngExpression[]).addTo(map);
 
-  map.on("zoom", function(e) {
-    if (map.getZoom() >= 16) {
-      buildingsLayer.addTo(map);
-    } else {
-      map.removeLayer(buildingsLayer);
-    }
-  });
+
+  // Do not show the buildings markers until DB ready
+
+  // var buildingMarkers = buildings.map(building => {
+  //   var marker = L.marker(building.coordinates);
+  //   marker.on("click", function() {
+  //     console.log(building.name);
+  //   });
+  //   return marker;
+  // });
+
+  // var buildingsLayer = L.layerGroup(buildingMarkers);
+
+  // map.on("zoom", function(e) {
+  //   if (map.getZoom() >= 16) {
+  //     buildingsLayer.addTo(map);
+  //   } else {
+  //     map.removeLayer(buildingsLayer);
+  //   }
+  // });
 
   return map;
 };
