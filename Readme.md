@@ -19,3 +19,25 @@ Interacting with API
 DB interactions 
 * connect to the DB: `cd backend`, `\psql -d DATABASE_NAME` 
 * username and password are in .env
+
+### Troubleshooting 
+* After restarting the computer, I've encountered the following error when running the server:
+    ```shell
+    connection = Database.connect(**conn_params)
+  File "/Users/justynazygmunt/.virtualenvs/churchy-ZLeFWcU6/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+    django.db.utils.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?```
+This issue is related to broken `postgresql` - see the output of `brew services list` 
+```shell
+➜  churchy git:(main) ✗ brew services list
+Name          Status     User File
+mysql         none
+postgresql    error  256 root ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+postgresql@11 none
+postgresql@13 none
+rabbitmq      none
+unbound       none
+```
+
+In order to fix it, run `rm /usr/local/var/postgres/postmaster.pid` and then `brew services restart postgresql` (maybe with `sudo`).
