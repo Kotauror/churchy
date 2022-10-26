@@ -1,5 +1,6 @@
 import * as React from "react";
 import L, { LatLngExpression } from "leaflet";
+import "leaflet-textpath";
 import { useEffect } from "react";
 import { Plot, Green, Building } from "../MapWrapper";
 import { analysedArea } from "./analysed_area";
@@ -25,6 +26,22 @@ const simplefMapStyle = L.tileLayer(
   }
 );
 
+const detailedMapStyle = L.tileLayer(
+  "https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png",
+  {
+    detectRetina: true,
+    maxZoom: 20,
+    maxNativeZoom: 17,
+    attribution:
+      '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+  }
+);
+
+var baseMaps = {
+  "Wysoki kontrast": simplefMapStyle,
+  "Szczegółowa mapa": detailedMapStyle
+};
+
 const createMap = (
   plots: Plot[],
   fullyAccessibleGreens: Green[],
@@ -40,9 +57,6 @@ const createMap = (
     layers: [simplefMapStyle]
   });
 
-  var baseMaps = {
-    // "Plan miasta": simplefMapStyle
-  };
   var overlayMaps = {
     "Dostęp bez ograniczeń": layerFactory(
       map,
@@ -79,30 +93,20 @@ const createMap = (
   L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
 
   // pushes back the plots so that the inner plots are shown on hover
-  overlayMaps['Niekomercyjne działki kościelne'].bringToBack()
+  overlayMaps["Niekomercyjne działki kościelne"].bringToBack();
 
-  L.polyline(analysedArea as LatLngExpression[]).addTo(map);
+  const analysedAreaLine = L.polyline(analysedArea as LatLngExpression[])
+    .addTo(map)
+    .setStyle({ color: "lightgray", weight: 1.8, dashArray: "4, 4" });
 
-
-  // Do not show the buildings markers until DB ready
-
-  // var buildingMarkers = buildings.map(building => {
-  //   var marker = L.marker(building.coordinates);
-  //   marker.on("click", function() {
-  //     console.log(building.name);
-  //   });
-  //   return marker;
-  // });
-
-  // var buildingsLayer = L.layerGroup(buildingMarkers);
-
-  // map.on("zoom", function(e) {
-  //   if (map.getZoom() >= 16) {
-  //     buildingsLayer.addTo(map);
-  //   } else {
-  //     map.removeLayer(buildingsLayer);
-  //   }
-  // });
+  analysedAreaLine.setText("         granica analizy          ", {
+    repeat: true,
+    attributes: {
+      fill: "dimgray",
+      "font-size": "12",
+      "background-colour": "red"
+    }
+  });
 
   return map;
 };
