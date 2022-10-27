@@ -1,4 +1,6 @@
-export const analysedArea = [
+import L, { LatLngExpression } from "leaflet";
+
+const analysedArea = [
   [50.073727235438, 19.934474499921],
   [50.073381383808, 19.933080775428],
   [50.07262049035, 19.931494098087],
@@ -49,3 +51,19 @@ export const analysedArea = [
   [50.073819396258, 19.937805128283],
   [50.073728723835, 19.934289593817]
 ];
+
+const analysedAreaText = "        granica analizy         "
+
+export const analysedAreaProvider = (): L.Polyline => {
+  const line = L.polyline(analysedArea as LatLngExpression[]);
+  line
+    .setStyle({ color: "lightgray", weight: 10, opacity: 0.7 })
+    .setText(analysedAreaText, {
+      repeat: true,
+      attributes: {
+        fill: "dimgray",
+        "font-size": "12"
+      }
+    });
+  return line;
+};

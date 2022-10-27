@@ -3,7 +3,7 @@ import L, { LatLngExpression } from "leaflet";
 import "leaflet-textpath";
 import { useEffect } from "react";
 import { Plot, Green, Building } from "../MapWrapper";
-import { analysedArea } from "./analysed_area";
+import { analysedAreaProvider } from "./analysed_area";
 import { PropertySidebar } from "../PropertySidebar";
 import {
   plotStyle,
@@ -13,34 +13,8 @@ import {
   noAccessGreenStyle
 } from "./polygon_styles";
 import { layerFactory } from "./layer_factory";
+import { simplefMapStyle, baseMaps } from "./map_base_properties";
 import { Feature } from "geojson";
-
-const defaultZoom = 14;
-const simplefMapStyle = L.tileLayer(
-  "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-  {
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: "abcd",
-    maxNativeZoom: 17
-  }
-);
-
-const detailedMapStyle = L.tileLayer(
-  "https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png",
-  {
-    detectRetina: true,
-    maxZoom: 20,
-    maxNativeZoom: 17,
-    attribution:
-      '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-  }
-);
-
-var baseMaps = {
-  "Wysoki kontrast": simplefMapStyle,
-  "Szczegółowa mapa": detailedMapStyle
-};
 
 const createMap = (
   plots: Plot[],
@@ -53,7 +27,7 @@ const createMap = (
 ) => {
   const map = L.map("map", {
     center: [50.051, 19.935],
-    zoom: defaultZoom,
+    zoom: 14,
     layers: [simplefMapStyle]
   });
 
@@ -90,23 +64,15 @@ const createMap = (
     )
   };
 
+  // Layers control 
+  // TODO: made collapsed: true on mobile
   L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
 
   // pushes back the plots so that the inner plots are shown on hover
   overlayMaps["Niekomercyjne działki kościelne"].bringToBack();
 
-  const analysedAreaLine = L.polyline(analysedArea as LatLngExpression[])
-    .addTo(map)
-    .setStyle({ color: "lightgray", weight: 1.8, dashArray: "4, 4" });
-
-  analysedAreaLine.setText("         granica analizy          ", {
-    repeat: true,
-    attributes: {
-      fill: "dimgray",
-      "font-size": "12",
-      "background-colour": "red"
-    }
-  });
+  // add analysed area polyline
+  analysedAreaProvider().addTo(map)
 
   return map;
 };

@@ -17,7 +17,6 @@ const actionListenersForLayers = (
     layer.setStyle({
       weight: 3
     });
-    // TODO ZOOM IN ON IT would be nice 
   });
   layer.on("mouseout", () => {
     layer.setStyle({
