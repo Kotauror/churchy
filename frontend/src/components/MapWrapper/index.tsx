@@ -3,32 +3,49 @@ import { useState, useEffect } from "react";
 import doRequest from "../../Request";
 import { ChurchyMap } from "../ChurchyMap";
 
+export enum Religion {
+  ROMAN = "RO",
+  ORTHODOX = "OR",
+  JUDAISM = "JU",
+  OTHER = "OT"
+}
+
+export enum VisitorsAccessType {
+  UNRESTRICTED = "UR",
+  OPEN_DAYTIME = "OD",
+  SOME_RESTRICTIONS = "SR",
+  NO_ACCESS = "NA"
+}
+
 export interface PropertyBase {
   id: number;
   name: string;
   owner: string;
   address: string;
   description: string;
-  religion: "RO" | "OR" | "JU" | "OT";
-  visitors_access_details: string;
+  religion: Religion;
+  visitors_access_details: string | null;
+  visitors_access: VisitorsAccessType;
   coordinates: [][] | [number, number];
 }
 
+export enum PropertyBaseType {
+  PLOT = "Plot",
+  GREEN = "Green"
+} 
+
 export interface Plot extends PropertyBase {
-  visitors_access: "UR" | "OD" | "SA" | "NA";
   coordinates: [][];
 }
 
 export interface Building extends PropertyBase {
   purpose: "PP" | "CL" | "AD" | "OT";
-  visitors_access: "UR" | "OD" | "SA" | "NA";
-  paying_access: boolean;
+  praying_access: boolean;
   plot: number;
   coordinates: [number, number];
 }
 
 export interface Green extends PropertyBase {
-  visitors_access: "UR" | "OD" | "SA" | "NA";
   green_type: "GD" | "PK" | "MD" | "SQ" | "CT";
   plot: number;
   coordinates: [][];
@@ -58,16 +75,25 @@ export const MapWrapper = (): JSX.Element => {
 
       const greenResult: Green[] = await doRequest({ path: "/green/" });
       setFullyAccessibleGreens(
-        greenResult.filter(green => green.visitors_access === "UR")
+        greenResult.filter(
+          green => green.visitors_access === VisitorsAccessType.UNRESTRICTED
+        )
       );
       setGreensOpenDaytime(
-        greenResult.filter(green => green.visitors_access === "OD")
+        greenResult.filter(
+          green => green.visitors_access === VisitorsAccessType.OPEN_DAYTIME
+        )
       );
       setGreensWithSpecialAccess(
-        greenResult.filter(green => green.visitors_access === "SA")
+        greenResult.filter(
+          green =>
+            green.visitors_access === VisitorsAccessType.SOME_RESTRICTIONS
+        )
       );
       setNoAccessGreen(
-        greenResult.filter(green => green.visitors_access === "NA")
+        greenResult.filter(
+          green => green.visitors_access === VisitorsAccessType.NO_ACCESS
+        )
       );
     })();
   }, []);

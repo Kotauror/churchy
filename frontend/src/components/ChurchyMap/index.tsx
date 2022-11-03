@@ -1,5 +1,5 @@
 import * as React from "react";
-import L, { LatLngExpression } from "leaflet";
+import L from "leaflet";
 import "leaflet-textpath";
 import { useEffect } from "react";
 import { Plot, Green, Building } from "../MapWrapper";
@@ -64,7 +64,7 @@ const createMap = (
     )
   };
 
-  // Layers control 
+  // Layers control
   // TODO: made collapsed: true on mobile
   L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
 
@@ -72,7 +72,7 @@ const createMap = (
   overlayMaps["Niekomercyjne działki kościelne"].bringToBack();
 
   // add analysed area polyline
-  analysedAreaProvider().addTo(map)
+  analysedAreaProvider().addTo(map);
 
   return map;
 };
@@ -110,7 +110,14 @@ export const ChurchyMap = ({
     return () => {
       map.remove();
     };
-  }, [plots, fullyAccessibleGreens, buildings]);
+  }, [
+    plots,
+    fullyAccessibleGreens,
+    buildings,
+    greensWithSpecialAccess,
+    greensOpenDaytime,
+    noAccessGreen
+  ]);
 
   return (
     <div className="main-grid">

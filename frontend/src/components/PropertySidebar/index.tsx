@@ -3,6 +3,7 @@ import { Feature } from "geojson";
 import { Drawer } from "antd";
 import { useState, useEffect } from "react";
 import "./PropertySidebar.css";
+import fetchImages from "../../crud/fetchImages"
 
 const ToggleVisibility = ({ arrow, onClick }: { arrow: any; onClick: any }) => {
   return (
@@ -29,6 +30,7 @@ export const PropertySidebar = ({
   };
 
   useEffect(() => {
+    fetchImages(feature.properties!.id, feature.properties!.propertyType)
     setVisible(true);
   }, [feature]);
 
@@ -48,7 +50,7 @@ export const PropertySidebar = ({
           {feature!.properties!.name}
           <ToggleVisibility
             arrow={
-              <span className="material-icons md-light">
+              <span className="material-icons md-light" data-testid={`toggle-arrow-${visible ? "left" : "right"}`}>
                 arrow_{visible ? "left" : "right"}
               </span>
             }

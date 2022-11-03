@@ -1,6 +1,6 @@
 import { PropertyBase } from "../MapWrapper";
 import L from "leaflet";
-import { geoJsonsFactory } from "./geoJson_factory";
+import { geoJsonsFactory } from "./geojsonFactory";
 
 const actionListenersForLayers = (
   map: any,
