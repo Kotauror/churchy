@@ -3,7 +3,7 @@ import { PropertyBaseType } from "../components/MapWrapper";
 
 const fetchImages = (propertyId: number, propertyType: PropertyBaseType) => {
   return doRequest({
-    path: `/images/churchy-${propertyType.toLocaleLowerCase()}s/${propertyId}`
+    path: `/images?id=${propertyId}&property=${propertyType.toLocaleLowerCase()}`
   });
 };
 

@@ -17,7 +17,7 @@ describe("fetchImages", () => {
     fetchImages(propertyId, propertyType);
 
     const expectedDoRequestArgument = {
-      path: `/images/churchy-greens/124`
+      path: `/images?id=124&property=green`
     };
     expect(doRequest).toHaveBeenCalledWith(expectedDoRequestArgument);
   });
