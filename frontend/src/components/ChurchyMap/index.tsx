@@ -3,7 +3,7 @@ import L from "leaflet";
 import "leaflet-textpath";
 import { useEffect } from "react";
 import { Plot, Green, Building } from "../MapWrapper";
-import { analysedAreaProvider } from "./analysed_area";
+import { analysedAreaProvider } from "./analysedArea";
 import { PropertySidebar } from "../PropertySidebar";
 import {
   plotStyle,
@@ -11,9 +11,9 @@ import {
   daytimeOpenGreenStyle,
   unrestrictedGreenStyle,
   noAccessGreenStyle
-} from "./polygon_styles";
-import { layerFactory } from "./layer_factory";
-import { simplefMapStyle, baseMaps } from "./map_base_properties";
+} from "./polygonStyles";
+import { layerFactory } from "./layerFactory";
+import { simplefMapStyle, baseMaps } from "./mapBaseProperties";
 import { Feature } from "geojson";
 
 const createMap = (
