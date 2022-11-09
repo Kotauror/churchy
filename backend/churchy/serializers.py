@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Plot, Building, Green
+from .models import Plot, Building, Green, Image
 
 class PlotSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,3 +15,8 @@ class GreenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Green
         fields = ('id', 'name', 'green_type', 'address', 'description', 'owner', 'religion', 'visitors_access', 'visitors_access_details', 'coordinates', 'plot')
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ('id', 'author', 'source')

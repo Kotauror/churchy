@@ -22,6 +22,9 @@ router = routers.DefaultRouter()
 router.register(r'plot', views.PlotView, 'plot')
 router.register(r'building', views.BuildingView, 'building')
 router.register(r'green', views.GreenView, 'green')
+# zwroc liste hashow z bazy danych images dla danego ID i typu 
+# typ property i id w paramsie 
+router.register(r'images', views.ImageView, 'images')
 
 
 
