@@ -26,7 +26,7 @@ const createMap = (
   setActiveFeature: (feature: any) => void
 ) => {
   const map = L.map("map", {
-    center: [50.051, 19.935],
+    center: [50.055, 19.935],
     zoom: 14,
     layers: [simplefMapStyle]
   });
