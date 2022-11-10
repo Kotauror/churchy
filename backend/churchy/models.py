@@ -105,11 +105,13 @@ class ImageToProperty(models.Model):
   plot = models.ForeignKey(
     Plot,
     on_delete=models.DO_NOTHING,
-    null=True
+    null=True,
+    blank=True
   )
   green = models.ForeignKey(
     Green,
     on_delete=models.DO_NOTHING,
-    null=True 
+    null=True,
+    blank=True 
   )
   

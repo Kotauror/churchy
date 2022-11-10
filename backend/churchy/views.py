@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets, mixins
-from .serializers import PlotSerializer, BuildingSerializer, GreenSerializer
-from .models import Plot, Building, Green
+from rest_framework.response import Response
+from .serializers import PlotSerializer, BuildingSerializer, GreenSerializer, ImageSerializer
+from .models import Plot, Building, Green, ImageToProperty
+from django.db.models import Q
 
 class PlotView(viewsets.ModelViewSet):
     serializer_class = PlotSerializer
@@ -19,9 +21,16 @@ class ImageView(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     def list(self, request):
         property_id = request.GET['id']
         property_type = request.GET['property']
-        print(property_id, property_type)
+        images_to_propertys = ImageToProperty.objects.all().select_related("image")
+        images = []
+        for image_to_property in images_to_propertys:
+            if property_type == 'green':
+                    if (image_to_property.green != None) and (int(image_to_property.green.id) == int(property_id)):
+                        images.append(image_to_property.image)
+            else:
+                    if (image_to_property.plot != None) and (int(image_to_property.plot.id) == int(property_id)):
+                        images.append(image_to_property.image)
 
-        ## if property_type is green, get all images with green_id that match property_id
-        ## if property_type is plot, get all images with property_id that match property_id
- 
-        return "ppp"
+        serializer = ImageSerializer(images, many=True)
+
+        return Response(serializer.data)
