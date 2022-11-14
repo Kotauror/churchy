@@ -3,7 +3,7 @@ import { Feature } from "geojson";
 import { Drawer } from "antd";
 import { useState, useEffect } from "react";
 import "./PropertySidebar.css";
-import fetchImages from "../../crud/fetchImages"
+import fetchImages from "../../crud/fetchImages";
 
 const ToggleVisibility = ({ arrow, onClick }: { arrow: any; onClick: any }) => {
   return (
@@ -23,6 +23,8 @@ export const PropertySidebar = ({
   setActiveFeature: (arg: any) => void;
 }): JSX.Element => {
   const [visible, setVisible] = useState(true);
+  const [imageData, setImageData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const onClose = () => {
     setVisible(false);
@@ -30,7 +32,15 @@ export const PropertySidebar = ({
   };
 
   useEffect(() => {
-    fetchImages(feature.properties!.id, feature.properties!.propertyType)
+    (async () => {
+      setLoading(true);
+      const fetchImagesResults = await fetchImages(
+        feature.properties!.id,
+        feature.properties!.propertyType
+      );
+      setImageData(fetchImagesResults);
+      setLoading(false);
+    })();
     setVisible(true);
   }, [feature]);
 
@@ -48,9 +58,13 @@ export const PropertySidebar = ({
           open={visible}
         >
           {feature!.properties!.name}
+          {loading && "Ładowanie zdjęć"}
           <ToggleVisibility
             arrow={
-              <span className="material-icons md-light" data-testid={`toggle-arrow-${visible ? "left" : "right"}`}>
+              <span
+                className="material-icons md-light"
+                data-testid={`toggle-arrow-${visible ? "left" : "right"}`}
+              >
                 arrow_{visible ? "left" : "right"}
               </span>
             }

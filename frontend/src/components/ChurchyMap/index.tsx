@@ -118,7 +118,6 @@ export const ChurchyMap = ({
     greensOpenDaytime,
     noAccessGreen
   ]);
-
   return (
     <div className="main-grid">
       <div id="map" style={{ height: "800px" }}></div>

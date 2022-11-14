@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import { PropertySidebar } from ".";
 import { Feature } from "geojson";
 import fetchImages from "../../crud/fetchImages";
@@ -15,19 +15,41 @@ describe("PropertySidebar", () => {
     geometry: { type: "Point", coordinates: [] }
   };
 
-  it("calls fetchImages", () => {
-    render(
-      <PropertySidebar feature={feature} setActiveFeature={setFeatureStub} />
-    );
+  describe("images", () => {
+    it("calls fetchImages", () => {
+      act(() => {
+        render(
+          <PropertySidebar
+            feature={feature}
+            setActiveFeature={setFeatureStub}
+          />
+        );
+      });
 
-    expect(fetchImages).toHaveBeenCalled();
+      expect(fetchImages).toHaveBeenCalled();
+    });
+
+    it("shows Loading when making the request", () => {
+      render(
+        <PropertySidebar feature={feature} setActiveFeature={setFeatureStub} />
+      );
+
+      expect(() => {
+        screen.getByText("Ładowanie zdjęć");
+      }).not.toThrow();
+    });
   });
 
   describe("toggling visibility of an active feature", () => {
     it("shows the toggle arrow left when active feature visible (default)", () => {
-      render(
-        <PropertySidebar feature={feature} setActiveFeature={setFeatureStub} />
-      );
+      act(() => {
+        render(
+          <PropertySidebar
+            feature={feature}
+            setActiveFeature={setFeatureStub}
+          />
+        );
+      });
 
       expect(screen.getAllByTestId("toggle-arrow-left")[0]).toBeVisible();
       expect(
@@ -35,10 +57,15 @@ describe("PropertySidebar", () => {
       ).toThrow();
     });
 
-    it("shows the toggle arrow right when the active feature is not visible", () => {
-      render(
-        <PropertySidebar feature={feature} setActiveFeature={setFeatureStub} />
-      );
+    it("shows the toggle arrow right when the active feature is not visible", async () => {
+      await act(() => {
+        render(
+          <PropertySidebar
+            feature={feature}
+            setActiveFeature={setFeatureStub}
+          />
+        );
+      });
 
       fireEvent.click(screen.getByTestId("toggle-arrow-left") as any[0]);
 
@@ -48,13 +75,17 @@ describe("PropertySidebar", () => {
   });
 
   describe("when closing the drawer", () => {
-    it("sets the active element to undefined", () => {
-      render(
-        <PropertySidebar feature={feature} setActiveFeature={setFeatureStub} />
-      );
+    it("sets the active element to undefined", async () => {
+      await act(async () => {
+        render(
+          <PropertySidebar
+            feature={feature}
+            setActiveFeature={setFeatureStub}
+          />
+        );
+      });
 
       fireEvent.click(screen.getByLabelText("Close"));
-
       expect(setFeatureStub).toHaveBeenCalledWith(undefined);
     });
   });
