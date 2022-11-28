@@ -94,7 +94,7 @@ class Green(models.Model):
 class Image(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   author = models.TextField()
-  source = models.TextField() 
+  source = models.TextField()
 
 class ImageToProperty(models.Model):
   image = models.ForeignKey(

@@ -1,8 +1,8 @@
 import * as request from "../Request";
-import fetchImages from "./fetchImages";
+import fetchImagesMetaData from "./fetchImagesMetaData";
 import { PropertyBaseType } from "../components/MapWrapper";
 
-describe("fetchImages", () => {
+describe("fetchImagesMetaData", () => {
   afterEach(() => jest.clearAllMocks());
   afterAll(() => jest.restoreAllMocks());
 
@@ -14,7 +14,7 @@ describe("fetchImages", () => {
     const propertyId = 124;
     const propertyType = PropertyBaseType.GREEN;
 
-    fetchImages(propertyId, propertyType);
+    fetchImagesMetaData(propertyId, propertyType);
 
     const expectedDoRequestArgument = {
       path: `/images/?id=124&property=green`

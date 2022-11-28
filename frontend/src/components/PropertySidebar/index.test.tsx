@@ -2,8 +2,8 @@ import React from "react";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import { PropertySidebar } from ".";
 import { Feature } from "geojson";
-import fetchImages from "../../crud/fetchImages";
-jest.mock("../../crud/fetchImages");
+import fetchImagesMetaData from "../../crud/fetchImagesMetaData";
+jest.mock("../../crud/fetchImagesMetaData");
 
 describe("PropertySidebar", () => {
   afterEach(() => jest.clearAllMocks());
@@ -16,7 +16,7 @@ describe("PropertySidebar", () => {
   };
 
   describe("images", () => {
-    it("calls fetchImages", () => {
+    it("calls fetchImagesMetaData", () => {
       act(() => {
         render(
           <PropertySidebar
@@ -26,7 +26,7 @@ describe("PropertySidebar", () => {
         );
       });
 
-      expect(fetchImages).toHaveBeenCalled();
+      expect(fetchImagesMetaData).toHaveBeenCalled();
     });
 
     it("shows Loading when making the request", () => {

@@ -3,7 +3,8 @@ import { Feature } from "geojson";
 import { Drawer } from "antd";
 import { useState, useEffect } from "react";
 import "./PropertySidebar.css";
-import fetchImages from "../../crud/fetchImages";
+import fetchImagesMetaData from "../../crud/fetchImagesMetaData";
+import { ImagesDisplayer } from "../ImagesDisplayer";
 
 const ToggleVisibility = ({ arrow, onClick }: { arrow: any; onClick: any }) => {
   return (
@@ -15,6 +16,12 @@ const ToggleVisibility = ({ arrow, onClick }: { arrow: any; onClick: any }) => {
   );
 };
 
+export interface ImageMetaData {
+  id: string;
+  author: string;
+  source: string;
+}
+
 export const PropertySidebar = ({
   feature,
   setActiveFeature
@@ -23,7 +30,7 @@ export const PropertySidebar = ({
   setActiveFeature: (arg: any) => void;
 }): JSX.Element => {
   const [visible, setVisible] = useState(true);
-  const [imageData, setImageData] = useState([]);
+  const [imagesMetaData, setImagesMetaData] = useState<ImageMetaData[]>();
   const [loading, setLoading] = useState(false);
 
   const onClose = () => {
@@ -34,11 +41,11 @@ export const PropertySidebar = ({
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const fetchImagesResults = await fetchImages(
+      const fetchedImagesMetaData = await fetchImagesMetaData(
         feature.properties!.id,
         feature.properties!.propertyType
       );
-      setImageData(fetchImagesResults);
+      setImagesMetaData(fetchedImagesMetaData);
       setLoading(false);
     })();
     setVisible(true);
@@ -58,6 +65,9 @@ export const PropertySidebar = ({
           open={visible}
         >
           {feature!.properties!.name}
+          {imagesMetaData && imagesMetaData.length > 0 && (
+            <ImagesDisplayer imagesMetaData={imagesMetaData} />
+          )}
           {loading && "Ładowanie zdjęć"}
           <ToggleVisibility
             arrow={
