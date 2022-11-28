@@ -95,6 +95,7 @@ class Image(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   author = models.TextField()
   source = models.TextField()
+  details = models.TextField(blank=True, null=True)
 
 class ImageToProperty(models.Model):
   image = models.ForeignKey(
