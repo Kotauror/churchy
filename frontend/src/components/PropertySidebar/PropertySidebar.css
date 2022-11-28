@@ -43,7 +43,7 @@
   .propertySidebar .propertySidebar__drawer {
     position: absolute;
     top: 0;
-    width: 35em;
+    width: 28em;
     z-index: 1001;
     background-color: white;
     box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px, 
