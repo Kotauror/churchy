@@ -96,6 +96,7 @@ class Image(models.Model):
   author = models.TextField()
   source = models.TextField()
   details = models.TextField(blank=True, null=True)
+  aerial = models.BooleanField(default=False) 
 
 class ImageToProperty(models.Model):
   image = models.ForeignKey(
@@ -113,6 +114,5 @@ class ImageToProperty(models.Model):
     Green,
     on_delete=models.DO_NOTHING,
     null=True,
-    blank=True 
+    blank=True
   )
-  

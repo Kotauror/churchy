@@ -19,7 +19,7 @@ class GreenSerializer(serializers.ModelSerializer):
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ('id', 'author', 'source')
+        fields = ('id', 'author', 'source', 'details', 'aerial')
 
 class ImageToPropertySerializer(serializers.ModelSerializer):
     class Meta:

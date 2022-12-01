@@ -12,7 +12,7 @@ class GreenAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'description')
 
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'author', 'source')
+    list_display = ('id', 'author', 'source', 'details', 'aerial')
 
 class ImageToPropertyAdmin(admin.ModelAdmin):
     list_display = ('image', 'plot', 'green')

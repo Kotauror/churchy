@@ -4,7 +4,10 @@
   }
   
   .propertySidebar .ant-drawer-content-wrapper {
-    width: inherit;
+    /* width: 400px !important; */
+    overflow-y: scroll;
+    height: inherit;
+    width: 500px;
   }
   
   .propertySidebar .ant-drawer-body {
