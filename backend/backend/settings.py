@@ -29,7 +29,10 @@ SECRET_KEY = '4vkqpemuclc9^#-=3lp9+^n^lp0ox7fe531q-ndjlybg%88)=@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "ec2-13-40-171-77.eu-west-2.compute.amazonaws.com",
+    "kosciolkowo.pl"
+]
 
 
 # Application definition
