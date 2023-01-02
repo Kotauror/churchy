@@ -48,12 +48,12 @@ const analysedArea = [
   [50.073746986899, 19.934312603253]
 ];
 
-const analysedAreaText = "        granica analizy         ";
+const analysedAreaText = "                  granica analizy                   ";
 
 export const analysedAreaProvider = (): L.Polyline => {
   const line = L.polyline(analysedArea as LatLngExpression[]);
   line
-    .setStyle({ color: "lightgray", weight: 10, opacity: 0.7 })
+    .setStyle({ color: "#202021", weight: 20, opacity: 0.1 })
     .setText(analysedAreaText, {
       repeat: true,
       attributes: {

@@ -1,5 +1,5 @@
 footer {
-  background-color: #202021;
+  background-color: #3a3a48;
   position: absolute;
   bottom: 0;
   height: 30px;
@@ -13,14 +13,25 @@ footer {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-left: -1px;
+    margin-left: 20em;
+    margin-right: 20em;
 }
 
-.links p {
+.links a {
   flex-grow: 1;
     flex-basis: auto;
     margin: .25em 0;
     padding: 0 1em;
     text-align: center;
+    text-decoration: none;
+  }
+  
+  .links a:not(:first-child) {
     border-left: 1px solid #ccc;
+
+}
+
+a:visited {
+  text-decoration: none;
+  color: white;
 }

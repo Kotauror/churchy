@@ -1,13 +1,15 @@
 import React from "react";
 import "./Footer.css";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
     <footer>
       <div className="links">
-        <p>Projekt</p>
-        <p>Twórcy</p>
-        <p>Dołącz</p>
+          <Link to="/">Mapa</Link>
+          <Link to="/projekt">O projekcie</Link>
+          <Link to="/tworcy">O twórcach</Link>
+          <Link to="/dolacz">Dołącz</Link>
       </div>
     </footer>
   );
