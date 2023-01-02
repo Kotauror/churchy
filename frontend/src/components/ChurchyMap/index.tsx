@@ -15,6 +15,7 @@ import {
 } from "./polygonStyles";
 import { layerFactory } from "./layerFactory";
 import { simplefMapStyle, baseMaps } from "./mapBaseProperties";
+import "./ChurchyMap.css"
 import { Feature } from "geojson";
 
 const getPlotsWithoutReclaimed = (plots: PropertyBase[]) => {
@@ -135,8 +136,8 @@ export const ChurchyMap = ({
     noAccessGreen
   ]);
   return (
-    <div className="main-grid">
-      <div id="map" style={{ height: "800px" }}></div>
+    <div className="main-grid" >
+      <div id="map"></div>
       {activeFeature !== undefined && (
         <PropertySidebar
           feature={activeFeature}
