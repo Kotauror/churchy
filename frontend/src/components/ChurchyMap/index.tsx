@@ -15,12 +15,12 @@ import {
 } from "./polygonStyles";
 import { layerFactory } from "./layerFactory";
 import { simplefMapStyle, baseMaps } from "./mapBaseProperties";
-import "./ChurchyMap.css"
+import "./ChurchyMap.css";
 import { Feature } from "geojson";
 
 const getPlotsWithoutReclaimed = (plots: PropertyBase[]) => {
-  return plots.filter(plot => plot.ownership_model !== 'KP')
-}
+  return plots.filter(plot => plot.ownership_model !== "KP");
+};
 
 const createMap = (
   plots: Plot[],
@@ -33,46 +33,68 @@ const createMap = (
   setActiveFeature: (feature: any) => void
 ) => {
   const map = L.map("map", {
-    center: [50.060, 19.935],
+    center: [50.06, 19.938],
     zoom: 15,
     layers: [simplefMapStyle]
   });
 
+  const createOverlayName = (text: string, id: string): string => {
+    return `${text} <span class='legend-color' id='${id}'>____</span>`;
+  };
+
   var overlayMaps = {
-    "Dostęp bez ograniczeń": layerFactory(
-      map,
-      fullyAccessibleGreens,
-      unrestrictedGreenStyle,
-      setActiveFeature
-    ),
-    "Dostęp w godzinach otwarcia kościoła": layerFactory(
-      map,
-      greensOpenDaytime,
-      daytimeOpenGreenStyle,
-      setActiveFeature
-    ),
-    "Dostęp dodatkowo ograniczony (np. za opłatą)": layerFactory(
-      map,
-      greensWithSpecialAccess,
-      specialAccessGreenStyle,
-      setActiveFeature
-    ),
-    "Brak dostępu": layerFactory(
-      map,
-      noAccessGreen,
-      noAccessGreenStyle,
-      setActiveFeature
-    ),
-    "Niekomercyjne działki kościelne": layerFactory(
+    [createOverlayName(
+      "Niekomercyjne działki kościelne",
+      "plots"
+    )]: layerFactory(
       map,
       getPlotsWithoutReclaimed(plots),
       plotStyle,
       setActiveFeature
     ),
-    "Działki odkupione przez miasto": layerFactory(
+    [createOverlayName(
+      "Działki odkupione przez miasto",
+      "reclaimed"
+    )]: layerFactory(
       map,
       plotsReclaimed,
       reclaimedStyle,
+      setActiveFeature
+    ),
+    [createOverlayName(
+      "Dostęp bez ograniczeń",
+      "unrestricted"
+    )]: layerFactory(
+      map,
+      fullyAccessibleGreens,
+      unrestrictedGreenStyle,
+      setActiveFeature
+    ),
+    [createOverlayName(
+      "Dostęp w godzinach otwarcia kościoła",
+      "daytimeOpen"
+    )]: layerFactory(
+      map,
+      greensOpenDaytime,
+      daytimeOpenGreenStyle,
+      setActiveFeature
+    ),
+    [createOverlayName(
+      "Dostęp dodatkowo ograniczony (np. za opłatą)",
+      "specialAccess"
+    )]: layerFactory(
+      map,
+      greensWithSpecialAccess,
+      specialAccessGreenStyle,
+      setActiveFeature
+    ),
+    [createOverlayName(
+      "Brak dostępu",
+      "noAccess"
+    )]: layerFactory(
+      map,
+      noAccessGreen,
+      noAccessGreenStyle,
       setActiveFeature
     )
   };
@@ -82,7 +104,9 @@ const createMap = (
   L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
 
   // pushes back the plots so that the inner plots are shown on hover
-  overlayMaps["Niekomercyjne działki kościelne"].bringToBack();
+  overlayMaps[
+    createOverlayName("Niekomercyjne działki kościelne", "plots")
+  ].bringToBack();
 
   // add analysed area polyline
   analysedAreaProvider().addTo(map);
@@ -136,7 +160,7 @@ export const ChurchyMap = ({
     noAccessGreen
   ]);
   return (
-    <div className="main-grid" >
+    <div className="main-grid">
       <div id="map"></div>
       {activeFeature !== undefined && (
         <PropertySidebar

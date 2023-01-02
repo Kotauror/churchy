@@ -1,6 +1,55 @@
 #map {
   position: absolute;
   top: 0;
-  bottom:30px;
+  bottom: 30px;
   width: 100%;
+}
+
+.leaflet-control-layers {
+  font-family: "Lato";
+}
+
+input {
+  accent-color: #535364;
+}
+
+.legend-color {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#unrestricted.legend-color {
+  background-color: lime;
+  color: lime;
+  opacity: 0.6;
+}
+
+#reclaimed.legend-color {
+  background-color: darkgreen;
+  color: darkgreen; 
+  opacity: 0.6
+}
+
+#daytimeOpen.legend-color {
+  background-color: #ffff66;
+  color: #ffff66; 
+  opacity: 0.6
+}
+
+#specialAccess.legend-color {
+  background-color: orange;
+  color: orange; 
+  opacity: 0.6
+}
+
+#plots.legend-color {
+  background-color: #646B64;
+  color: #646B64; 
+  opacity: 0.5
+}
+
+#noAccess.legend-color {
+  background-color: #e90909;
+  color: red;
+  opacity: 0.6
 }
