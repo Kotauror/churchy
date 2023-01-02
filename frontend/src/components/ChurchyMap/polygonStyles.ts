@@ -25,5 +25,11 @@ export const specialAccessGreenStyle = {
 export const noAccessGreenStyle = {
   color: "red",
   weight: 0.5,
-  fillOpacity: 0.6
+  fillOpacity: 0.7
 };
+
+export const reclaimedStyle = {
+  color: "green",
+  weight: 0.5,
+  fillOpacity: 0.4
+}

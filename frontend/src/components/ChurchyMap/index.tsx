@@ -2,7 +2,7 @@ import * as React from "react";
 import L from "leaflet";
 import "leaflet-textpath";
 import { useEffect } from "react";
-import { Plot, Green, Building } from "../MapWrapper";
+import { Plot, Green, Building, PropertyBase } from "../MapWrapper";
 import { analysedAreaProvider } from "./analysedArea";
 import { PropertySidebar } from "../PropertySidebar";
 import {
@@ -10,14 +10,20 @@ import {
   specialAccessGreenStyle,
   daytimeOpenGreenStyle,
   unrestrictedGreenStyle,
-  noAccessGreenStyle
+  noAccessGreenStyle,
+  reclaimedStyle
 } from "./polygonStyles";
 import { layerFactory } from "./layerFactory";
 import { simplefMapStyle, baseMaps } from "./mapBaseProperties";
 import { Feature } from "geojson";
 
+const getPlotsWithoutReclaimed = (plots: PropertyBase[]) => {
+  return plots.filter(plot => plot.ownership_model !== 'KP')
+}
+
 const createMap = (
   plots: Plot[],
+  plotsReclaimed: Plot[],
   fullyAccessibleGreens: Green[],
   greensOpenDaytime: Green[],
   greensWithSpecialAccess: Green[],
@@ -26,8 +32,8 @@ const createMap = (
   setActiveFeature: (feature: any) => void
 ) => {
   const map = L.map("map", {
-    center: [50.055, 19.935],
-    zoom: 14,
+    center: [50.060, 19.935],
+    zoom: 15,
     layers: [simplefMapStyle]
   });
 
@@ -58,8 +64,14 @@ const createMap = (
     ),
     "Niekomercyjne działki kościelne": layerFactory(
       map,
-      plots,
+      getPlotsWithoutReclaimed(plots),
       plotStyle,
+      setActiveFeature
+    ),
+    "Działki odkupione przez miasto": layerFactory(
+      map,
+      plotsReclaimed,
+      reclaimedStyle,
       setActiveFeature
     )
   };
@@ -79,6 +91,7 @@ const createMap = (
 
 interface ChurchyMapProps {
   plots: Plot[];
+  plotsReclaimed: Plot[];
   fullyAccessibleGreens: Green[];
   greensOpenDaytime: Green[];
   greensWithSpecialAccess: Green[];
@@ -88,6 +101,7 @@ interface ChurchyMapProps {
 
 export const ChurchyMap = ({
   plots,
+  plotsReclaimed,
   fullyAccessibleGreens,
   greensOpenDaytime,
   greensWithSpecialAccess,
@@ -99,6 +113,7 @@ export const ChurchyMap = ({
   useEffect(() => {
     const map = createMap(
       plots,
+      plotsReclaimed,
       fullyAccessibleGreens,
       greensOpenDaytime,
       greensWithSpecialAccess,
@@ -112,6 +127,7 @@ export const ChurchyMap = ({
     };
   }, [
     plots,
+    plotsReclaimed,
     fullyAccessibleGreens,
     buildings,
     greensWithSpecialAccess,

@@ -20,6 +20,8 @@ export interface ImageMetaData {
   id: string;
   author: string;
   source: string;
+  description: string;
+  aerial: boolean;
 }
 
 export const PropertySidebar = ({
@@ -60,7 +62,7 @@ export const PropertySidebar = ({
           onClose={onClose}
           getContainer={false}
           style={{
-            left: visible ? 0 : "-22em"
+            left: visible ? 0 : "-35em"
           }}
           open={visible}
         >

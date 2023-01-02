@@ -4,10 +4,9 @@
   }
   
   .propertySidebar .ant-drawer-content-wrapper {
-    /* width: 400px !important; */
     overflow-y: scroll;
     height: inherit;
-    width: 500px;
+    width: inherit !important;
   }
   
   .propertySidebar .ant-drawer-body {
@@ -46,13 +45,11 @@
   .propertySidebar .propertySidebar__drawer {
     position: absolute;
     top: 0;
-    width: 28em;
+    width: 35em;
     z-index: 1001;
     background-color: white;
     box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px, 
       rgb(60 64 67 / 15%) 0px 2px 6px 2px;
     height: 100%;
-    opacity: 0.9;
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1) 0s;
   }
-  

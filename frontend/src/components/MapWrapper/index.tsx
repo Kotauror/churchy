@@ -23,6 +23,7 @@ export interface PropertyBase {
   owner: string;
   address: string;
   description: string;
+  ownership_model: string;
   religion: Religion;
   visitors_access_details: string | null;
   visitors_access: VisitorsAccessType;
@@ -53,6 +54,7 @@ export interface Green extends PropertyBase {
 
 export const MapWrapper = (): JSX.Element => {
   const [plots, setPlots] = useState<Plot[]>([]);
+  const [plotsReclaimed, setPlotsReclaimed] = useState<Plot[]>([]); 
   const [buildings, setBuildings] = useState<Building[]>([]);
   const [fullyAccessibleGreens, setFullyAccessibleGreens] = useState<Green[]>(
     []
@@ -67,6 +69,7 @@ export const MapWrapper = (): JSX.Element => {
     (async () => {
       const plotResult: Plot[] = await doRequest({ path: "/plot/" });
       setPlots(plotResult);
+      setPlotsReclaimed(plotResult.filter(plot => plot.ownership_model === "KP"))
 
       const buildingResult: Building[] = await doRequest({
         path: "/building/"
@@ -100,6 +103,7 @@ export const MapWrapper = (): JSX.Element => {
 
   const churchyMapProps = {
     plots,
+    plotsReclaimed,
     fullyAccessibleGreens,
     greensOpenDaytime,
     greensWithSpecialAccess,

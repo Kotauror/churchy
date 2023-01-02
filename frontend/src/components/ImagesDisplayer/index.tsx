@@ -18,10 +18,9 @@ export const ImagesDisplayer = (fetchedimagesData: {
 
     setUrls(workingUrls);
   }, [fetchedimagesData]);
-
   return (
     <div>
-      <ul>
+      <ul style={{paddingLeft: 0}}>
         {urls.map(url => {
           return <img style={{ width: "100%" }} src={url} key={url}></img>;
         })}
